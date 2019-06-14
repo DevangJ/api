@@ -1,7 +1,7 @@
 from flask import Flask, abort, jsonify
 from flask_restful import Api, Resource, reqparse, fields
 from flask_httpauth import HTTPBasicAuth, make_response
-import pymysql, urllib.parse
+import pymysql, urllib.parse, custom_functions
 
 app = Flask(__name__, static_url_path="")
 api = Api(app)
@@ -40,6 +40,8 @@ class EscapeString(Resource):
       response = pymysql.escape_string(string)
     elif type_ == "url":
       response = urllib.parse.quote(string)
+    elif type_ == "html":
+      response = custom_functions.html_escape(string)
     else:
       response = "invalid type"
     return {'response': response}, 201
