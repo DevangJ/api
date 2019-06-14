@@ -1,9 +1,10 @@
 html_escape_table = {
     "&": "&amp;",
-    '"': "&quot;",
-    "'": "&apos;",
     ">": "&gt;",
     "<": "&lt;",
+    '"': "&quot;",
+    "'": "&#x27;",
+    "/": "&#x2F"
     }
 
 def html_escape(text):
