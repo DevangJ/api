@@ -4,7 +4,7 @@ html_escape_table = {
     "<": "&lt;",
     '"': "&quot;",
     "'": "&#x27;",
-    "/": "&#x2F"
+    "/": "&#x2F;"
     }
 
 def html_escape(text):
