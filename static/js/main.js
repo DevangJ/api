@@ -1,9 +1,18 @@
-// $(function() {
-//   // Sidebar toggle behavior
-//   $('#sidebarCollapse').on('click', function() {
-//     $('#sidebar, #content').toggleClass('active');
-//   });
-// });
+$(function() {
+  // Sidebar toggle behavior
+  $('#sidebarOpen').on('click', function() {
+    $('#sidebar').addClass('active');
+  });
+});
+
+$(function() {
+  // Sidebar toggle behavior
+  $('#content').on('click', function() {
+    if($('#sidebar').hasClass('active')){
+      $('#sidebar').removeClass('active');
+    }
+  });
+});
 
 // Get all elements
 var lastId,
@@ -17,9 +26,11 @@ var lastId,
 
 // Bind click handler to menu items for fancy scroll animation
 menuItems.click(function(e){
+  if($('#sidebar').hasClass('active')){
+    $('#sidebar').removeClass('active');
+  }
   var href = $(this).attr("href"),
       offsetTop = $(href).offset().top-topMenuHeight;
-      console.log(offsetTop, topMenuHeight, $(href).offset().top);
   $('html, body').stop().animate({ 
       scrollTop: offsetTop
   }, 300);
