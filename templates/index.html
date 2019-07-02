@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <title>API Placeholder Title</title>
+</head>
+<body>
+
+  <!-- Vertical navbar -->
+  <div class="vertical-nav bg-white" id="sidebar">
+    <div class="py-4 px-3 mb-4 bg-light">
+      <div class="media d-flex align-items-center">
+        <!-- LOGO <img src="/static/img/logo.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm"> -->
+        <div class="media-body">
+          <h4 class="m-0">API</h4>
+          <p class="font-weight-light text-muted mb-0"><tt>[Version 0.0.1]</tt></p>
+        </div>
+      </div>
+    </div>
+    <ul class="nav flex-column bg-white mb-0">
+      <li class="nav-item">
+        <a href="#intro" class="nav-link text-dark bg-light">
+          <i class="mr-2"></i>
+          Introduction
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#auth" class="nav-link text-dark">
+          <i class="mr-2"></i>
+          Authentication
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#errors" class="nav-link text-dark">
+          <i class="mr-2"></i>
+          Errors
+        </a> 
+      </li>
+    </ul>
+    <p class="text-dark font-weight-bold text-uppercase px-3 small py-4 mb-0">Resources</p>
+      <ul class="nav flex-column bg-white mb-0">
+        <li class="nav-item">
+          <a href="#sqlinjection" class="nav-link text-dark">
+            <i class="mr-2"></i>
+            SQL Injection
+          </a>
+          <ul class="nav flex-column bg-white mb-0">
+            <li class="nav-item">
+              <a href="#sqlparameters" class="nav-link text-dark">
+                <i class="mr-4"></i>
+                Parameters
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#sqlresponses" class="nav-link text-dark">
+                <i class="mr-4"></i>
+                Responses
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#urlfiltering" class="nav-link text-dark">
+            <i class="mr-2"></i>
+            URL Filtering
+          </a>
+          <ul class="nav flex-column bg-white mb-0">
+            <li class="nav-item">
+              <a href="#urlparameters" class="nav-link text-dark">
+                <i class="mr-4"></i>
+                Parameters
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#urlresponses" class="nav-link text-dark">
+                <i class="mr-4"></i>
+                Responses
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+            
+          <!-- End vertical navbar -->
+  </div>
+  <!-- Body -->
+  <div class="page-content p-5" id="content">
+    <div class="jumbotron" id="intro">
+      <h3>
+        Introduction
+      </h3>
+      <hr class="my-4">
+      <div class="row">
+        <div class="col-md-6">
+          The API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+        </div>
+        <div class="col-md-6">
+          <div class="card text-monospace">
+            <div class="card-header text-muted" style="background-color: #2B3E50">
+              BASE URL
+            </div>
+            <div class="card-footer">
+              https://hosturl.com
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron" id="auth">
+      <h3>
+        Authentication
+      </h3>
+      <hr class="my-4">
+      <div class="row">
+        <div class="col-md-6">
+          <p>
+            The API uses API keys to authenticate requests.
+          </p>
+          <p>
+            Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.
+          </p>
+          <p>
+            Authentication to the API is performed via HTTP Basic Auth. Provide your API key as the basic auth username value. You do not need to provide a password.
+          </p>
+          <p>
+            All API requests must be made over HTTPS. Calls made over plain HTTP will fail. API requests without authentication will also fail.
+          </p>
+        </div>
+        <div class="col-md-6">
+          <div class="card text-monospace">
+            <div class="card-header text-muted" style="background-color: #2B3E50">
+              AUTHENTICATED REQUEST
+            </div>
+            <div class="card-footer">
+                curl https://hosturl.com/sql \<br>
+                -u default_key:
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron" id="errors">
+      <h3>
+        Errors
+      </h3>
+      <hr class="my-4">
+      <div class="row">
+        <div class="col-md-6">
+          <p>
+            The API uses conventional HTTP response codes to indicate the success or failure of an API request. In general: Codes in the <span class="badge badge-danger">2xx</span> range indicate success. Codes in the <span class="badge badge-danger">4xx</span> range indicate an error that failed given the information provided (e.g., a required parameter was omitted, input was erronous, etc.). Codes in the <span class="badge badge-danger">5xx</span> range indicate an error with the API's servers (these are rare).
+          </p>
+        </div>
+        <div class="col-md-6">
+          <div class="card text-monospace">
+            <div class="card-header text-muted" style="background-color: #2B3E50">
+              HTTP STATUS CODE SUMMARY
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-md-6" style="text-align: right">
+                  200 - OK<br>
+                  400 - Bad Request<br>
+                  405 - Not Allowed<br>
+                </div>
+                <div class="col-md-6">
+                    Success<br>
+                    Invalid Parameters<br>
+                    Invalid Method Used<br>
+                </div>
+              </div>
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron" id="sqlinjection">
+      <h3>
+        SQL Injection
+      </h3>
+      <hr class="my-4">
+      <div class="row">
+        <div class="col-md-6">
+          <p>
+            Use this to sanitize input strings for sql query execution. <code>input</code> is given via query string. <code>output</code> is recieved in json format.
+          </p>
+        </div>
+        <div class="col-md-6">
+          <div class="card text-monospace">
+            <div class="card-header text-muted" style="background-color: #2B3E50">
+              ENDPOINT
+            </div>
+            <div class="card-footer">
+              <code>POST</code> /sql  
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="jumbotron" style="background-color: #2B3E50; padding: 32px;" id="sqlparameters">
+        <h5 class="text-muted" style="background-color: #2B3E50">
+          PARAMETERS
+        </h5>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  $ <code>datatype</code><span class="text-muted float-right">(string)</span><br>
+                  <span class="font-italic text-muted">Available values: integer, string</span>
+                </div>
+                <div class="col-md-6">
+                  Type of Input<br>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  $ <code>input</code><span class="text-muted float-right">(string)</span> 
+                </div>
+                <div class="col-md-6">
+                  Input String<br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="jumbotron" style="background-color: #2B3E50; padding: 32px;" id="sqlresponses">
+        <h5 class="text-muted">
+          RESPONSES
+        </h5>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <code>200</code> 
+                  </div>
+                  <div class="col-md-6">
+                    successful operation<br>
+                    <span class="font-italic text-muted">Example response</span><br>
+                    <div class="jumbotron" style="padding: 32px;">
+                      <pre>
+                          {
+                            "output" : "sanitized string" 
+                          }
+                        </pre>
+                      
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-6">
+                    <code>400</code> 
+                  </div>
+                  <div class="col-md-6">
+                    invalid json parameters<br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+    </div>
+    <div class="jumbotron" id="urlfiltering">
+      <h3>
+        URL Filtering
+      </h3>
+      <hr class="my-4">
+      <div class="row">
+        <div class="col-md-6">
+          <p>
+            Use this to sanitize input strings for urls. <code>input</code> is given via query string. <code>output</code> is recieved in json format.
+          </p>
+        </div>
+        <div class="col-md-6">
+          <div class="card text-monospace">
+            <div class="card-header text-muted" style="background-color: #2B3E50">
+              ENDPOINT
+            </div>
+            <div class="card-footer">
+              <code>POST</code> /url  
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="jumbotron" style="background-color: #2B3E50; padding: 32px;" id="urlparameters">
+        <h5 class="text-muted" style="background-color: #2B3E50">
+          PARAMETERS
+        </h5>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  $ <code>input</code><span class="text-muted float-right">(string)</span> 
+                </div>
+                <div class="col-md-6">
+                  Input String<br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="jumbotron" style="background-color: #2B3E50; padding: 32px;" id="urlresponses">
+        <h5 class="text-muted">
+          RESPONSES
+        </h5>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <code>200</code> 
+                  </div>
+                  <div class="col-md-6">
+                    successful operation<br>
+                    <span class="font-italic text-muted">Example response</span><br>
+                    <div class="jumbotron" style="padding: 32px;">
+                      <pre>
+                          {
+                            "output" : "sanitized string" 
+                          }
+                        </pre>
+                      
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-6">
+                    <code>400</code> 
+                  </div>
+                  <div class="col-md-6">
+                    invalid json parameters<br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+    </div>
+    <br><br>
+  </div>
+
+
+<!-- End body -->
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

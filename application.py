@@ -1,75 +1,81 @@
-from flask import Flask, abort, jsonify
-from flask_restful import Api, Resource, reqparse, fields
-from flask_httpauth import HTTPBasicAuth, make_response
-import pymysql, urllib.parse, custom_functions
+from flask import Flask, request, jsonify, render_template, url_for
+import pymysql
 
-app = Flask(__name__, static_url_path="")
-api = Api(app)
-auth = HTTPBasicAuth()
+app = Flask(__name__)
 
 
-@auth.get_password
-def get_password(username):
-    if username == 'user':
-        return 'pass'
-    return None
+@app.errorhandler(405)
+def not_allowed(error=None):
+    message = {
+            'status': 405,
+            'message': 'Method not allowed: ' + request.method,
+    }
+    resp = jsonify(message)
+    resp.status_code = 405
+
+    return resp
 
 
-@auth.error_handler
-def unauthorized():
-    # return 403 instead of 401 to prevent browsers from displaying the default
-    # auth dialog
-    return make_response(jsonify({'message': 'Unauthorized access'}), 403)
+@app.errorhandler(400)
+def invalid_params(error=None):
+    message = {
+            'status': 400,
+            'message': 'Invalid parameters',
+    }
+    resp = jsonify(message)
+    resp.status_code = 400
+
+    return resp
 
 
-class EscapeString(Resource):
-  decorators = [auth.login_required]
-  
-  def __init__(self):
-        self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument('string')
-        self.reqparse.add_argument('type')
-        super(EscapeString, self).__init__()
+@app.route('/sql', methods=["POST"])
+def sql():
+  if request.method == "POST":
+    print(request.form["datatype"])
+    return sql_response(request.form["datatype"], request.form["input"])
+  else:
+    return not_allowed()
 
 
-  def post(self):
-    args = self.reqparse.parse_args()
-    string = args["string"]
-    type_ = args["type"]
-    if type_ == "mysql":
-      response = pymysql.escape_string(string)
-    elif type_ == "url":
-      response = urllib.parse.quote(string)
-    elif type_ == "html":
-      response = custom_functions.html_escape(string)
+@app.route('/url', methods=["POST"])
+def url():
+  if request.method == "POST":
+    body = request.json
+    return url_response(body["datatype"], body["input"])
+  else:
+    return not_allowed()
+
+
+@app.route('/home')
+def home():
+   return render_template("index.html")
+
+
+def sql_response(datatype, input):
+  if datatype == "integer":
+    if isinstance(input, int) or input.isdigit(): 
+      message = {
+        'output': input
+      }
     else:
-      response = "invalid type"
-    return {'response': response}, 201
+      message = {
+        'output': 'invalid input: contains non integers'
+      }
+  elif datatype == "string":
+    message = {
+      'output' : pymysql.escape_string(input)
+    }
+  else:
+    return invalid_params()
+  resp = jsonify(message)
+  resp.status_code = 200
+  return resp
 
 
-class WhiteList(Resource):
-  decorators = [auth.login_required]
-
-  def __init__(self):
-    self.reqparse = reqparse.RequestParser()
-    self.reqparse.add_argument('whitelist', type=str, action='append')
-    self.reqparse.add_argument('string', type=str)
-    super(WhiteList, self).__init__()
 
 
-  def post(self):
-      args = self.reqparse.parse_args()
-      string = args["string"]
-      whitelist = args["whitelist"]
-      # print(whitelist)
-      if string in whitelist:
-        return {'response' : True}, 201
-      return {'response' : False}, 201
-
-
-api.add_resource(EscapeString, '/escape', endpoint='escape')
-api.add_resource(WhiteList, '/whitelist', endpoint='whitelist')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+  app.run(host='localhost', port=8000, debug=True)
+ 
