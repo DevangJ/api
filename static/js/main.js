@@ -26,7 +26,7 @@ menuItems.click(function(e){
   e.preventDefault();
 });
 
-function(){
+function scrollHighlighting(){
   // Get container scroll position
   var fromTop = $(this).scrollTop()+topMenuHeight;
   
@@ -41,65 +41,20 @@ function(){
   var id = cur && cur.length ? cur[0].id : "";
   if (lastId !== id) {
       lastId = id;
-      // Set/remove active class
+      // Set/remove bg-light class
       menuItems
         .removeClass("bg-light")
         .filter("[href='#"+id+"']").addClass("bg-light");
       url = $(location).attr("href");
-      url = url.slice(0, url.indexOf('#'))
-      // window.location.replace(url+"#"+id);  
+      if (url.indexOf("#") != -1){
+        url = url.slice(0, url.indexOf('#'))
+      }
       history.pushState("","" ,url+"#"+id);
   }
 }
 
 // Bind to scroll
-$(window).scroll(function(){
-  // Get container scroll position
-  var fromTop = $(this).scrollTop()+topMenuHeight;
-  
-  // Get id of current scroll item
-  var cur = scrollItems.map(function(){
-    if ($(this).offset().top < fromTop+100)
-      return this;
-  });
-  
-  // Get the id of the current element
-  cur = cur[cur.length-1];
-  var id = cur && cur.length ? cur[0].id : "";
-  if (lastId !== id) {
-      lastId = id;
-      // Set/remove active class
-      menuItems
-        .removeClass("bg-light")
-        .filter("[href='#"+id+"']").addClass("bg-light");
-      url = $(location).attr("href");
-      url = url.slice(0, url.indexOf('#'))
-      // window.location.replace(url+"#"+id);  
-      history.pushState("","" ,url+"#"+id);
-  }
-});
+$(window).scroll(scrollHighlighting);
 
-$(document).ready(function(){
-  // Get container scroll position
-  var fromTop = $(this).scrollTop()+topMenuHeight;
-  
-  // Get id of current scroll item
-  var cur = scrollItems.map(function(){
-    if ($(this).offset().top < fromTop+100)
-      return this;
-  });
-  
-  // Get the id of the current element
-  cur = cur[cur.length-1];
-  var id = cur && cur.length ? cur[0].id : "";
-  if (lastId !== id) {
-      lastId = id;
-      // Set/remove active class
-      menuItems
-        .removeClass("bg-light")
-        .filter("[href='#"+id+"']").addClass("bg-light");
-      url = $(location).attr("href");
-      history.pushState("","" ,url+"#"+id);
-  }
-});
+$(document).ready(scrollHighlighting);
 
