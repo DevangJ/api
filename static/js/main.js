@@ -26,6 +26,7 @@ var lastId,
 
 // Bind click handler to menu items for fancy scroll animation
 menuItems.click(function(e){
+  // to close sidebar in mobile screens
   if($('#sidebar').hasClass('active')){
     $('#sidebar').removeClass('active');
   }
@@ -36,6 +37,8 @@ menuItems.click(function(e){
   }, 300);
   e.preventDefault();
 });
+
+
 
 function scrollHighlighting(){
   // Get container scroll position
@@ -56,10 +59,30 @@ function scrollHighlighting(){
       menuItems
         .removeClass("bg-light")
         .filter("[href='#"+id+"']").addClass("bg-light");
+// test
+        // function(e){
+          var tmp = menuItems.filter("[href='#"+id+"']"),
+          toe = tmp.offset().top,
+          boe = tmp.offset().top + tmp.outerHeight(),
+          bos = $(window).scrollTop() + $(window).innerHeight(),
+          tos = $(window).scrollTop();
+      if (!((bos > toe) && (tos < boe))){
+        offsetMenuActive = tmp.offset().top;
+        console.log(offsetMenuActive);
+        $('#sidebar').animate({ 
+          scrollTop: offsetMenuActive
+      }, 300);
+      }
+      // e.preventDefault();
+      // }
+      
+      //test ends
+
       url = $(location).attr("href");
       if (url.indexOf("#") != -1){
         url = url.slice(0, url.indexOf('#'))
       }
+      // console.log(scrollItems)
       history.pushState("","" ,url+"#"+id);
   }
 }

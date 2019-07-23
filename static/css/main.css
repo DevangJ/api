@@ -41,6 +41,23 @@
     transition: all 0.4s;
   }
   
+  #sidebar {
+    position: fixed;
+    width: 150px;
+    overflow-y: scroll;
+    top: 0;
+    bottom: 0; 
+  }
+
+  #sidebar {
+    -ms-overflow-style: none;  // IE 10+
+    overflow: -moz-scrollbars-none;  // Firefox
+  }
+
+  #sidebar::-webkit-scrollbar {
+    display:none; //Safari aand Chrome
+  }
+  
   /* for toggle behavior */
   
   #sidebar.active {

@@ -18,7 +18,7 @@
         <!-- LOGO <img src="/static/img/logo.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm"> -->
         <div class="media-body">
           <h4 class="m-0">API</h4>
-          <p class="font-weight-light text-muted mb-0"><tt>[Version 0.0.1]</tt></p>
+          <p class="font-weight-light text-muted mb-0 text-monospace">[Version 0.0.1]</p>
         </div>
       </div>
     </div>
@@ -78,6 +78,26 @@
             </li>
             <li class="nav-item">
               <a href="#urlresponses" class="nav-link text-dark">
+                <i class="mr-4"></i>
+                Responses
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#crosssitescripting" class="nav-link text-dark">
+            <i class="mr-2"></i>
+            Cross Site Scripting
+          </a>
+          <ul class="nav flex-column bg-white mb-0">
+            <li class="nav-item">
+              <a href="#xssparameters" class="nav-link text-dark">
+                <i class="mr-4"></i>
+                Parameters
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#xssresponses" class="nav-link text-dark">
                 <i class="mr-4"></i>
                 Responses
               </a>
@@ -316,6 +336,97 @@
       </div>
       <br>
       <div class="jumbotron" style="background-color: #2B3E50; padding: 32px;" id="urlresponses">
+        <h5 class="text-muted">
+          RESPONSES
+        </h5>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <code>200</code> 
+                  </div>
+                  <div class="col-md-6">
+                    successful operation<br>
+                    <span class="font-italic text-muted">Example response</span><br>
+                    <div class="jumbotron" style="padding: 32px;">
+                      <pre>
+                        {
+                          "output" : "sanitized string" 
+                        }
+                      </pre>
+                      
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-6">
+                    <code>400</code> 
+                  </div>
+                  <div class="col-md-6">
+                    invalid json parameters<br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+    </div>
+    <div class="jumbotron" id="crosssitescripting">
+      <h3>
+        Cross Site Scripting
+      </h3>
+      <hr class="my-4">
+      <div class="row">
+        <div class="col-md-6">
+          <p>
+            Use this to sanitize input strings for inserting into webpages. <code>input</code> is given via query string. <code>output</code> is recieved in json format.
+          </p>
+        </div>
+        <div class="col-md-6">
+          <div class="card text-monospace">
+            <div class="card-header text-muted" style="background-color: #2B3E50">
+              ENDPOINT
+            </div>
+            <div class="card-footer">
+              <code>POST</code> /xss  
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="jumbotron" style="background-color: #2B3E50; padding: 32px;" id="xssparameters">
+        <h5 class="text-muted" style="background-color: #2B3E50">
+          PARAMETERS
+        </h5>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  $ <code>type</code><span class="text-muted float-right">(string)</span><br>
+                  <span class="font-italic text-muted">Available values: html, attribute, javascript, css, url</span>
+                </div>
+                <div class="col-md-6">
+                  Type of Escaping to be done<br>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  $ <code>input</code><span class="text-muted float-right">(string)</span> 
+                </div>
+                <div class="col-md-6">
+                  Input String<br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="jumbotron" style="background-color: #2B3E50; padding: 32px;" id="xssresponses">
         <h5 class="text-muted">
           RESPONSES
         </h5>
